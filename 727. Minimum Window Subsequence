@@ -1,0 +1,31 @@
+class Solution {
+    public String minWindow(String S, String T) {
+        if (S.length() < T.length()) return "";
+        int indexT = 0;
+        int indexS = 0;
+        int start = -1;
+        int end = S.length();
+        int length = S.length();
+        while (indexS < S.length()){
+            if (S.charAt(indexS) == T.charAt(indexT)){
+                indexT++;
+                if (indexT == T.length()){
+                    end = indexS + 1;
+                    indexT--;
+                    while (indexT >= 0){
+                        if (S.charAt(indexS) == T.charAt(indexT)) indexT--;
+                        indexS--;
+                    }
+                    indexS++;
+                    indexT++;
+                    if (end - indexS < length){
+                        start = indexS;
+                        length = end - start;
+                    }
+                }
+            }
+            indexS++;
+        }
+        return start == -1 ? "" : S.substring(start, start + length);
+    }
+}
